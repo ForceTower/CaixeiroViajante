@@ -22,7 +22,7 @@ public class GrafoTest {
 		
 	}
 	@Test
-	public void test1(){
+	public void testSimples1(){
 		int tamanho = 11;
 		String menorCaminho = "[A,D,C,B,A]";
 		
@@ -40,6 +40,55 @@ public class GrafoTest {
 		grafo.trabalhemSenhoresAlunos("A");
 		
 		assertEquals(menorCaminho, grafo.getResultado()); 
+	}
+	
+	@Test
+	public void testSimples2(){
+		int tamanho = 37;
+		String menorCaminho = "[1,4,5,3,2,6,1]";
+		
+		grafo.criarVertice("1");
+		grafo.criarVertice("2");
+		grafo.criarVertice("3");
+		grafo.criarVertice("4");
+		grafo.criarVertice("5");
+		grafo.criarVertice("6");
+		
+		grafo.criarAresta("1", "4", 4);
+		grafo.criarAresta("2", "3", 2);
+		grafo.criarAresta("3", "5", 7);
+		grafo.criarAresta("1", "5", 1);
+		grafo.criarAresta("2", "6", 10);
+		grafo.criarAresta("1", "6", 3);
+		grafo.criarAresta("5", "4", 11);
+		grafo.criarAresta("5", "4", 20);
+		
+		grafo.trabalhemSenhoresAlunos("1");
+		assertEquals(menorCaminho, grafo.getResultado()); 
+	}
+	
+	@Test
+	public void testGrafoDesconexo(){
+		grafo.criarVertice("1");
+		grafo.criarVertice("2");
+		grafo.criarVertice("3");
+		grafo.criarVertice("4");
+		grafo.criarVertice("5");
+		grafo.criarVertice("6");
+		grafo.criarVertice("7");
+		
+		grafo.criarAresta("1", "4", 4);
+		grafo.criarAresta("2", "3", 2);
+		grafo.criarAresta("3", "5", 7);
+		grafo.criarAresta("1", "5", 1);
+		grafo.criarAresta("2", "6", 10);
+		grafo.criarAresta("1", "6", 3);
+		grafo.criarAresta("5", "4", 11);
+		grafo.criarAresta("5", "4", 20);
+		
+		grafo.trabalhemSenhoresAlunos("1");
+		assertNull(grafo.getResultado());
+		
 	}
 	
 }

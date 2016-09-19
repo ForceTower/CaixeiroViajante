@@ -7,6 +7,7 @@ import model.Aresta;
 import model.Vertice;
 
 public class Grafo {
+	private List<Aresta> melhor = null;
 	private List<List<Vertice>> resultadosVertice = new ArrayList<>();
 	
 	private int menor = Integer.MAX_VALUE;
@@ -80,7 +81,8 @@ public class Grafo {
 		//int indexOfShorter = -1;
 		indexOfShorter = -1;
 		
-		List<Aresta> melhor = null;
+		//List<Aresta> melhor = null;
+		melhor = null;
 		//int menor = Integer.MAX_VALUE;
 		menor = Integer.MAX_VALUE;
 		
@@ -111,7 +113,9 @@ public class Grafo {
 	}
 	
 	public String getResultado(){
-		return this.resultadosVertice.get(this.indexOfShorter).toString().replace(" ", "");
+		if(melhor != null)
+			return this.resultadosVertice.get(this.indexOfShorter).toString().replace(" ", "");
+		return null;
 	}
 	
 	public int getTamanho(){
@@ -143,7 +147,29 @@ public class Grafo {
 		
 		gf.trabalhemSenhoresAlunos("0");
 		
+		Aresta.todasAsArestas.clear();
+		Vertice.todosOsVertices.clear();
 		
+		Grafo grafo = new Grafo();
+		
+		grafo.criarVertice("1");
+		grafo.criarVertice("2");
+		grafo.criarVertice("3");
+		grafo.criarVertice("4");
+		grafo.criarVertice("5");
+		grafo.criarVertice("6");
+		grafo.buscarVertice("7");
+		
+		grafo.criarAresta("1", "4", 4);
+		grafo.criarAresta("2", "3", 2);
+		grafo.criarAresta("3", "5", 7);
+		grafo.criarAresta("1", "5", 1);
+		grafo.criarAresta("2", "6", 10);
+		grafo.criarAresta("1", "6", 3);
+		grafo.criarAresta("5", "4", 11);
+		grafo.criarAresta("5", "4", 20);
+		
+		grafo.trabalhemSenhoresAlunos("1");
 		//System.out.println(gf.getTamanho());
 		//System.out.println(gf.getResultado());
 		
