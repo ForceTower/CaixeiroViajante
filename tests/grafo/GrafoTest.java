@@ -64,7 +64,8 @@ public class GrafoTest {
 		grafo.criarAresta("5", "4", 20);
 		
 		grafo.trabalhemSenhoresAlunos("1");
-		assertEquals(menorCaminho, grafo.getResultado()); 
+		assertEquals(menorCaminho, grafo.getResultado());
+		assertEquals(tamanho, grafo.getTamanho());
 	}
 	
 	@Test
@@ -87,8 +88,49 @@ public class GrafoTest {
 		grafo.criarAresta("5", "4", 20);
 		
 		grafo.trabalhemSenhoresAlunos("1");
-		assertNull(grafo.getResultado());
-		
+		assertNull(grafo.getResultado());	
 	}
 	
+	@Test
+	public void testComplexo(){
+		int tamanho = 57;
+		String menorCaminho = "[1,2,3,4,5,6,7,8,9,10,11,1]";
+		
+		grafo.criarVertice("1");
+		grafo.criarVertice("2");
+		grafo.criarVertice("3");
+		grafo.criarVertice("4");
+		grafo.criarVertice("5");
+		grafo.criarVertice("6");
+		grafo.criarVertice("7");
+		grafo.criarVertice("8");
+		grafo.criarVertice("9");
+		grafo.criarVertice("10");
+		grafo.criarVertice("11");
+
+		grafo.criarAresta("1", "2", 4);
+		grafo.criarAresta("1", "7", 3);
+		grafo.criarAresta("1", "11", 5);
+		grafo.criarAresta("2", "3", 12);
+		grafo.criarAresta("2", "6", 3);
+		grafo.criarAresta("2", "9", 6);
+		grafo.criarAresta("3", "4", 7);
+		grafo.criarAresta("3", "11", 6);
+		grafo.criarAresta("4", "5", 5);
+		grafo.criarAresta("4", "7", 4);
+		grafo.criarAresta("4", "9", 7);
+		grafo.criarAresta("5", "6", 3);
+		grafo.criarAresta("5", "11", 3);
+		grafo.criarAresta("6", "7", 4);
+		grafo.criarAresta("6", "10", 5);
+		grafo.criarAresta("7", "8", 6);
+		grafo.criarAresta("8", "9", 5);
+		grafo.criarAresta("8", "11", 4);
+		grafo.criarAresta("9", "10", 2);
+		grafo.criarAresta("10", "11", 4);
+		
+		grafo.trabalhemSenhoresAlunos("1");
+		assertEquals(menorCaminho, grafo.getResultado());
+		assertEquals(tamanho, grafo.getTamanho());
+	}
 }
