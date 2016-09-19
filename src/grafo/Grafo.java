@@ -7,6 +7,10 @@ import model.Aresta;
 import model.Vertice;
 
 public class Grafo {
+	private List<List<Vertice>> resultadosVertice = new ArrayList<>();
+	
+	private int menor = Integer.MAX_VALUE;
+	private int indexOfShorter = -1;
 	
 	public Vertice criarVertice(String nome) {
 		if (!Vertice.todosOsVertices.contains(new Vertice(nome)))
@@ -36,7 +40,9 @@ public class Grafo {
 	
 	public void trabalhemSenhoresAlunos(String verticeInicial) {
 		List<List<Aresta>> resultados = new ArrayList<>();
-		List<List<Vertice>> resultadosVertice = new ArrayList<>();
+		//List<List<Vertice>> resultadosVertice = new ArrayList<>();
+		resultadosVertice = new ArrayList<>();
+		
 		Vertice v = buscarVertice(verticeInicial);
 		if (v == null) {
 			System.out.println("Vertice não existe");
@@ -71,9 +77,12 @@ public class Grafo {
 		System.out.println("Resultados em Vertices: ");
 		System.out.println(resultadosVertice);
 		
-		int indexOfShorter = -1;
+		//int indexOfShorter = -1;
+		indexOfShorter = -1;
+		
 		List<Aresta> melhor = null;
-		int menor = Integer.MAX_VALUE;
+		//int menor = Integer.MAX_VALUE;
+		menor = Integer.MAX_VALUE;
 		
 		
 		System.out.println("\nCalculos do tamanhos...");
@@ -101,6 +110,14 @@ public class Grafo {
 			System.out.println("Não é possivel detectar um caminho de ida e volta neste grafo sem repetir vertices e arestas");
 	}
 	
+	public String getResultado(){
+		return this.resultadosVertice.get(this.indexOfShorter).toString().replace(" ", "");
+	}
+	
+	public int getTamanho(){
+		return this.menor;
+	}
+	
 	public static void main(String[] args) {
 		Grafo gf = new Grafo();
 		/*
@@ -111,7 +128,6 @@ public class Grafo {
 		0 2 1
 		1 3 1
 		*/
-		
 		gf.criarVertice("0");
 		gf.criarVertice("1");
 		gf.criarVertice("2");
@@ -126,6 +142,12 @@ public class Grafo {
 		gf.criarAresta("1", "3", 1);
 		
 		gf.trabalhemSenhoresAlunos("0");
+		
+		
+		//System.out.println(gf.getTamanho());
+		//System.out.println(gf.getResultado());
+		
+		
 		/*
 		gf.criarVertice("A");
 		gf.criarVertice("B");
