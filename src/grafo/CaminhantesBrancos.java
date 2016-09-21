@@ -57,12 +57,12 @@ public class CaminhantesBrancos {
 			
 			else {
 				System.out.println("Vamos analisar: " + dest);
-				caminho.add(a);
 				
 				List<Vertice> copiaV = new ArrayList<>();
 				List<Aresta> copiaC = new ArrayList<>();
 				copiaV.addAll(visitados);
 				copiaC.addAll(caminho);
+				copiaC.add(a);
 				
 				horaDoShow(dest, ultimo, copiaC, copiaV, ignorar);
 			}
