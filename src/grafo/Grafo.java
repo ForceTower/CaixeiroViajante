@@ -1,5 +1,9 @@
 package grafo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +18,14 @@ public class Grafo {
 	private int indexOfShorter = -1;
 	
 	public Vertice criarVertice(String nome) {
-		if (!Vertice.todosOsVertices.contains(new Vertice(nome)))
+		if(this.buscarVertice(nome)==null){
+			return new Vertice(nome);
+		}
+		return null;
+		/*if (!Vertice.todosOsVertices.contains(new Vertice(nome)))
 			return new Vertice(nome);
 		
-		return null;
+		return null;*/
 	}
 	
 	public Aresta criarAresta(String v1, String v2, int distancia) {
@@ -120,6 +128,28 @@ public class Grafo {
 	
 	public int getTamanho(){
 		return this.menor;
+	}
+	
+	public void lerArquivo(String arquivo) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(new File(arquivo)));
+		int v = Integer.parseInt(br.readLine());
+		int a = Integer.parseInt(br.readLine());
+		if(a < v){
+			System.out.println("Este grafo não possui circuito");
+			br.close();
+			System.exit(-1);
+		}
+		else{
+			for(String linha = br.readLine(); linha != null; linha = br.readLine()){
+				String[] buffer = linha.split(" ");
+				this.criarVertice(buffer[0]);
+				this.criarVertice(buffer[1]);
+				this.criarAresta(buffer[0], buffer[1], Integer.parseInt(buffer[2]));
+			}
+			System.out.println("Leitura do arquivo: [OK]");
+		}
+		br.close();
+		this.trabalhemSenhoresAlunos("0");
 	}
 	
 	public static void main(String[] args) {
