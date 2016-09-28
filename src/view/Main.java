@@ -16,9 +16,7 @@ public class Main {
 			dir = args[0];		
 		Vertice.todosOsVertices.clear();
 		Aresta.todasAsArestas.clear();
-		
 		grafo.lerArquivo(dir);
-		
-		
+		System.out.println(grafo.cont);
 	}
 }
