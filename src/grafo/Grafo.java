@@ -13,7 +13,6 @@ import model.Vertice;
 public class Grafo {
 	private List<Aresta> melhor = null;
 	private List<List<Vertice>> resultadosVertice = new ArrayList<>();
-	public int cont=0;
 	private int menor = Integer.MAX_VALUE;
 	private int indexOfShorter = -1;
 	
@@ -42,11 +41,11 @@ public class Grafo {
 			v.setDistancia(valor);
 	}
 	
-	public void trabalhemSenhoresAlunos(String verticeInicial) {
+	public void trabalhemSenhoresAlunos(String verticeInicial) { //O algoritmo comeca daqui...
 		List<List<Aresta>> resultados = new ArrayList<>();
 		resultadosVertice = new ArrayList<>();
 		
-		Vertice v = buscarVertice(verticeInicial);
+		Vertice v = buscarVertice(verticeInicial); 
 		if (v == null) {
 			System.out.println("Vertice não existe");
 			return;
@@ -60,12 +59,14 @@ public class Grafo {
 		System.out.println("Quantidade de arestas: " + v.getArestas().size());
 		System.out.println("Arestas que partem deste vertice: " + v.getArestas());
 		
-		for (Aresta t : v.getArestas()) {
+		//Ou melhor.. comeca aqui...
+		//No pior caso, com um grafo completamente conectado, este for irá ser executado vertices - 1 vezes. (Ja que o vertice atual tem arestas Lenistas)
+		for (Aresta t : v.getArestas()) {  //(Vertice-1)
 			System.out.println("Tentativa com a retirada da aresta: " + t);
 			CaminhantesBrancos cm = new CaminhantesBrancos();
-			cm.analise(v, t, this);
+			cm.analise(v, t, this); //Chama o metodo que da continuidade à analise, entre aqui para depois ler a linha 79, para evitar spoilers
+			
 			for (List<Aresta> lis : cm.caminhosA) {
-				this.cont++;
 				lis.add(t);
 				resultados.add(lis);
 			}
@@ -75,21 +76,22 @@ public class Grafo {
 				resultadosVertice.add(lis);
 			}
 		}
+		// Ou sej, ele terá executado da linha 64 (Vertice-1) * (Vertice-2) * (Vertice-3) * ....  1;
+		// A ordem desse algoritmo então é O(fatorial(Vertice))
 		
 		System.out.println("Resultados em Arestas: ");
 		System.out.println(resultados);
 		System.out.println("Resultados em Vertices: ");
 		System.out.println(resultadosVertice);
-		
 		indexOfShorter = -1;
 		melhor = null;
 		menor = Integer.MAX_VALUE;
 		
 		System.out.println("\nCalculos do tamanhos...");
-		for (int i = 0; i < resultados.size(); i++) {
+		for (int i = 0; i < resultados.size(); i++) {//Resultados pode ter no maximo todas as permutacoes de caminhos
 			List<Aresta> cam = resultados.get(i);
 			int tamanho = 0;
-			for (Aresta aresta : cam){
+			for (Aresta aresta : cam){//Arestas de uma permutação vai ser apenas O de (V)
 				tamanho += aresta.getDistancia();
 			}
 			
@@ -100,6 +102,7 @@ public class Grafo {
 				melhor = cam;
 			}
 		}
+		//Esta parte de calculos dos tamanhos tambem executa Fatorial(Vertices);
 		System.out.println("\nResultado:\n");
 		if (melhor != null) {
 			System.out.println("O melhor caminho é o: ");
@@ -108,6 +111,7 @@ public class Grafo {
 		}
 		else
 			System.out.println("Não é possivel detectar um caminho de ida e volta neste grafo sem repetir vertices e arestas");
+		
 	}
 	
 	public String getResultado(){

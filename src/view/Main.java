@@ -1,9 +1,7 @@
 package view;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+
 import grafo.Grafo;
 import model.Aresta;
 import model.Vertice;
@@ -17,6 +15,5 @@ public class Main {
 		Vertice.todosOsVertices.clear();
 		Aresta.todasAsArestas.clear();
 		grafo.lerArquivo(dir);
-		System.out.println(grafo.cont);
 	}
 }
