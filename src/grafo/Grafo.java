@@ -119,7 +119,7 @@ public class Grafo {
 		Vertice v = buscarVertice(verticeInicial);
 		Vertice vf = buscarVertice(verticeFinal);
 		if (v == null || vf == null) {
-			Debug.println("Vertice não existe");
+			System.out.println("Vertice não existe");
 			return;
 		}
 		
@@ -149,7 +149,7 @@ public class Grafo {
 		}
 		
 		CaminhantesBrancos cm = new CaminhantesBrancos();
-		int fluxo = cm.getFluxoParaANovinhaDoGrau(todasUsadas);
+		int fluxo = cm.getFluxoParaANovinhaDoGrau(todasUsadas, vf);
 		System.out.println("Tava a caminho do fluxo e avistei: " + fluxo);
 	}
 	
@@ -182,6 +182,6 @@ public class Grafo {
 			System.out.println("Leitura do arquivo: [OK]");
 		}
 		br.close();
-		this.coisaDeQuintaSerie("0", "7");
+		this.coisaDeQuintaSerie("0", "13");
 	}
 }

@@ -86,13 +86,13 @@ public class CaminhantesBrancos {
 		visitados.add(v);
 		
 		if (v.equals(vf)) {
-			System.out.println("got then!");
+			System.out.println("Caminho: " + caminho);
 			return caminho;
 		}
 		
 		
 		for (Aresta a : v.getArestas()) {
-			if (a.getDistancia() != 0 && !a.getDestino(v).equals(visitados)) {
+			if (a.getDistancia() != 0 && !visitados.contains(a.getDestino(v))) {
 				List<Vertice> copiaV = new ArrayList<>();
 				List<Aresta> copiaC = new ArrayList<>();
 				copiaV.addAll(visitados);
@@ -100,16 +100,15 @@ public class CaminhantesBrancos {
 				copiaC.add(a);
 				List<Aresta> c = theRun(a.getDestino(v), vf, copiaC, copiaV);
 				if (c != null) {
-					System.out.println("Returning a path");
 					return c;
 				}
 			}
 		}
-		System.out.println("Dead end");
+		//System.out.println("Dead end");
 		return null;
 	}
 
-	public int getFluxoParaANovinhaDoGrau(List<List<Aresta>> todasUsadas) {
+	public int getFluxoParaANovinhaDoGrau(List<List<Aresta>> todasUsadas, Vertice vf) {
 		List<Aresta> semRepetir = new ArrayList<>();
 		for (List<Aresta> l : todasUsadas) {
 			for (Aresta a : l) {
@@ -121,9 +120,14 @@ public class CaminhantesBrancos {
 		
 		System.out.println("Arestas usadas: " + semRepetir);
 		
+		
 		int acumulador = 0;
-		for (Aresta n : semRepetir)
-			acumulador += n.getDistancia();
+		for (Aresta n : vf.getArestas()) {
+			if (n.isVirtual()) {
+				System.out.println(n);
+				acumulador += n.getDistancia();
+			}
+		}
 		return acumulador;
 	}
 }

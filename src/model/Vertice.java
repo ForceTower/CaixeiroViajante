@@ -19,7 +19,8 @@ public class Vertice implements Comparable<Vertice>{
 	}
 
 	public void addAresta(Aresta aresta) {
-		arestas.add(aresta);
+		if (!arestas.contains(aresta))
+			arestas.add(aresta);
 	}
 	
 	public List<Aresta> getArestas() {
@@ -87,7 +88,7 @@ public class Vertice implements Comparable<Vertice>{
 		
 		Aresta t = new Aresta(a.getV2(), a.getV1(), 0);
 		t.setVirtual(true);
-		arestas.add(t);
+		//arestas.add(t);
 		System.out.println("Criada aresta virtual: " + t);
 		return t;
 	}
