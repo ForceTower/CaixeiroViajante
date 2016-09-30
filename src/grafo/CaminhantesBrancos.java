@@ -3,6 +3,7 @@ package grafo;
 import java.util.ArrayList;
 import java.util.List;
 
+import debug.Debug;
 import model.Aresta;
 import model.Vertice;
 
@@ -12,53 +13,53 @@ public class CaminhantesBrancos {
 
 	public void analise(Vertice iniciar, Aresta ignorar, Grafo metodos) {
 		//Até a linha 20 temos constantes
-		System.out.println("------> E lá vamos nós de novo");
+		Debug.println("------> E lá vamos nós de novo");
 		Vertice finalizar = ignorar.getDestino(iniciar); // O fato de declarar o vertice final, consome 1 vertice por causa da condição na linha 30.
 		List<Vertice> visitados = new ArrayList<>();
 		List<Aresta> caminho = new ArrayList<>();
 		
-		System.out.println("Ultimo: " + finalizar);
+		Debug.println("Ultimo: " + finalizar);
 		
 		horaDoShow(iniciar, finalizar, caminho, visitados, ignorar); //Continuemos daqui
 	}
 
 	//No principio, na primeirissima iteração, chegamos aqui com (vertices - 2)
 	private void horaDoShow(Vertice atual, Vertice ultimo, List<Aresta> caminho, List<Vertice> visitados, Aresta ignorar) { 
-		System.out.println("Visitando: " + atual);
+		Debug.println("Visitando: " + atual);
 		visitados.add(atual); //Esta linha irá se encarregar de fazer este vertice nao ser mais visitado, basicamente um vertice--; 
 		
 		if (atual.equals(ultimo)) { //Assumindo um pior caso, esta verificacao ocorre somente na ultima iteração dessa recursão, ja que ele precisa passar por todos os vertices antes de chegar até o local desejado
-			System.out.println(" ------ > Chegou na ponta");
+			Debug.println(" ------ > Chegou na ponta");
 			if (visitados.size() == Vertice.todosOsVertices.size()) {
-				System.out.println("Temos um caminho em potencial: ");
-				System.out.println(visitados);
-				System.out.println("Arestas: " + caminho);
+				Debug.println("Temos um caminho em potencial: ");
+				Debug.println(visitados);
+				Debug.println("Arestas: " + caminho);
 				caminhos.add(visitados);
 				caminhosA.add(caminho);
 			} else {
-				System.out.println("Não satisfez a condição...");
-				System.out.println("Visitados: " + visitados);
+				Debug.println("Não satisfez a condição...");
+				Debug.println("Visitados: " + visitados);
 			}
 			return; // Num bom caso, este return irá quebrar esta recursão e a permutação deste ponto será finalizada, poupando execuções. mas continuemos o pior caso
 		}
-		System.out.println("Arestas: " + atual.getArestas());
+		Debug.println("Arestas: " + atual.getArestas());
 		
 		for (Aresta a : atual.getArestas()) { //Mais uma vez, no pior dos casos este for tambem executaria (Vertice-1) vezes
 			if (a.equals(ignorar)) {
-				System.out.println("É a aresta cujo nome n deve ser dito");
+				Debug.println("É a aresta cujo nome n deve ser dito");
 				continue; //Se for a aresta q foi marcada como fixa de volta, ele poupa uma recursao, mas no pior causo isso n aconteceria
 			}
 				
 			Vertice dest = a.getDestino(atual);
-			System.out.println("Analisando Aresta com Destino: " + dest);
+			Debug.println("Analisando Aresta com Destino: " + dest);
 			if (visitados.contains(dest)) { //Esta parte faz algo interessante, ela faz a recursap diminuir gradativamente o numero de vertices verificadas a cada execução da recursão
 				//pois, se a cada Recursão, um vertice diferente é colocado na listinha, em algum momento todos os vertices estarão na listinha
-				System.out.println("Ja visitado");
+				Debug.println("Ja visitado");
 				continue; //Este continue irá fazer a recursão ocorrer apenas aos que não foram visitados
 			}
 			
 			else { //Entrar neste else significa que o algoritmo irá visitar um local novo, e vai toma-lo como novo vertice para estudos, e será marcado como visitado
-				System.out.println("Vamos analisar: " + dest);
+				Debug.println("Vamos analisar: " + dest);
 				
 				List<Vertice> copiaV = new ArrayList<>();
 				List<Aresta> copiaC = new ArrayList<>();
