@@ -9,13 +9,15 @@ public class Aresta {
 	private Vertice v2;
 	private int distancia;
 	private boolean visitada;
+	private boolean virtual;
 	
 	public Aresta(Vertice v1, Vertice v2, int distancia) {
 		this.v1 = v1;
 		this.v2 = v2;
 		this.distancia = distancia;
 		v1.addAresta(this);
-		v2.addAresta(this);
+		virtual = false;
+		//v2.addAresta(this);
 		todasAsArestas.add(this);
 	}
 	
@@ -56,19 +58,29 @@ public class Aresta {
 	}
 	
 	public Vertice getDestino(Vertice v) {
-		return v.equals(v1) ? v2 : v1;
+		return v2;
+		//return v.equals(v1) ? v2 : v1;
 	}
 	
 	public boolean equals(Object e) {
 		if (e instanceof Aresta) {
 			Aresta o = (Aresta)e;
-			return ((o.getV1().equals(v1) && o.getV2().equals(v2)) || o.getV1().equals(v2) && o.getV2().equals(v1)) && o.getDistancia() == distancia;
+			return o.getV1().equals(v1) && o.getV2().equals(v2);
+			//return ((o.getV1().equals(v1) && o.getV2().equals(v2)) || o.getV1().equals(v2) && o.getV2().equals(v1)) && o.getDistancia() == distancia;
 		}
 		return false;
 	}
 	
 	public String toString() {
 		return "[" + v1 + " " + v2 + "]"; 
+	}
+	
+	public void setVirtual(boolean b) {
+		virtual = b;
+	}
+
+	public boolean isVirtual() {
+		return virtual;
 	}
 
 }

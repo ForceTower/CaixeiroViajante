@@ -115,6 +115,44 @@ public class Grafo {
 		
 	}
 	
+	public void coisaDeQuintaSerie(String verticeInicial, String verticeFinal) {
+		Vertice v = buscarVertice(verticeInicial);
+		Vertice vf = buscarVertice(verticeFinal);
+		if (v == null || vf == null) {
+			Debug.println("Vertice não existe");
+			return;
+		}
+		
+		List<List<Aresta>> todasUsadas = new ArrayList<>();
+		
+		while (true) {
+			CaminhantesBrancos cm = new CaminhantesBrancos();
+			List<Aresta> caminho = cm.theRunPrep(v, vf);
+			if (caminho == null) {
+				System.out.println("Acabou");
+				break;
+			}
+			
+			else {
+				todasUsadas.add(caminho);
+				int menor = Integer.MAX_VALUE;
+				for (Aresta a : caminho)
+					if (a.getDistancia() < menor)
+						menor = a.getDistancia();
+				
+				for (Aresta a : caminho) {
+					a.setDistancia(a.getDistancia() - menor);
+					Aresta b = a.getV2().getVirtualAresta(a);
+					b.setDistancia(b.getDistancia() + menor);
+				}
+			}
+		}
+		
+		CaminhantesBrancos cm = new CaminhantesBrancos();
+		int fluxo = cm.getFluxoParaANovinhaDoGrau(todasUsadas);
+		System.out.println("Tava a caminho do fluxo e avistei: " + fluxo);
+	}
+	
 	public String getResultado(){
 		if(melhor != null)
 			return this.resultadosVertice.get(this.indexOfShorter).toString().replace(" ", "");
@@ -144,6 +182,6 @@ public class Grafo {
 			System.out.println("Leitura do arquivo: [OK]");
 		}
 		br.close();
-		this.trabalhemSenhoresAlunos("0");
+		this.coisaDeQuintaSerie("0", "7");
 	}
 }

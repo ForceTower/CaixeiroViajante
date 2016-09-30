@@ -79,4 +79,17 @@ public class Vertice implements Comparable<Vertice>{
         return 1;
 	}
 
+	public Aresta getVirtualAresta(Aresta a) {
+		for (Aresta e : arestas){
+			if (e.getV1().equals(a.getV2()) && e.getV2().equals(a.getV1()))
+				return e;
+		}
+		
+		Aresta t = new Aresta(a.getV2(), a.getV1(), 0);
+		t.setVirtual(true);
+		arestas.add(t);
+		System.out.println("Criada aresta virtual: " + t);
+		return t;
+	}
+
 }

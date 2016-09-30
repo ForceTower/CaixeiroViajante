@@ -74,4 +74,56 @@ public class CaminhantesBrancos {
 	//Ou seja, este metodo será executado (Vertice-2) (Vertice-3) (Vertice-4) (Vertice-5) ...  até Vertice - n == 0
 	//Isso lembra o fatorial de um valor...
 	//Voltemos para a classe Grafo, linha 79 onde a explicação continua
+	
+	public List<Aresta> theRunPrep(Vertice v, Vertice vf) {
+		List<Aresta> caminho = new ArrayList<>();
+		List<Vertice> visitados = new ArrayList<>();
+		
+		return theRun(v, vf, caminho, visitados);
+	}
+
+	public List<Aresta> theRun(Vertice v, Vertice vf, List<Aresta> caminho, List<Vertice> visitados) {
+		visitados.add(v);
+		
+		if (v.equals(vf)) {
+			System.out.println("got then!");
+			return caminho;
+		}
+		
+		
+		for (Aresta a : v.getArestas()) {
+			if (a.getDistancia() != 0 && !a.getDestino(v).equals(visitados)) {
+				List<Vertice> copiaV = new ArrayList<>();
+				List<Aresta> copiaC = new ArrayList<>();
+				copiaV.addAll(visitados);
+				copiaC.addAll(caminho);
+				copiaC.add(a);
+				List<Aresta> c = theRun(a.getDestino(v), vf, copiaC, copiaV);
+				if (c != null) {
+					System.out.println("Returning a path");
+					return c;
+				}
+			}
+		}
+		System.out.println("Dead end");
+		return null;
+	}
+
+	public int getFluxoParaANovinhaDoGrau(List<List<Aresta>> todasUsadas) {
+		List<Aresta> semRepetir = new ArrayList<>();
+		for (List<Aresta> l : todasUsadas) {
+			for (Aresta a : l) {
+				if (!semRepetir.contains(a) && !a.isVirtual()) {
+					semRepetir.add(a);
+				}
+			}
+		}
+		
+		System.out.println("Arestas usadas: " + semRepetir);
+		
+		int acumulador = 0;
+		for (Aresta n : semRepetir)
+			acumulador += n.getDistancia();
+		return acumulador;
+	}
 }
